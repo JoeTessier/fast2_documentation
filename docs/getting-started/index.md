@@ -1,3 +1,5 @@
+# Getting started
+
 Fast2 is an ETL (Extract-Transform-Load). It embeds a workflow engine specially designed for mass migrations.
 
 Collect data from multiple sources (Data Warehouse, ECM Engine, Excel...). Transform them to give them even more values. Whether functional or business rules, Fast2 can be adapted to your needs. Last but not least, inject your data into a newer ECM system for instance. The list of connectors is constantly growing, offering new features each time.
