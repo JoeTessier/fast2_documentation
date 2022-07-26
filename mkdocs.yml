@@ -1,0 +1,143 @@
+site_name: Fast2 documentation
+theme:
+  name: material
+  logo: assets/Fast2_logo.png
+  favicon: assets/Fast2_logo.png
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top # 'Back to top' when scrolling up
+    - navigation.indexes
+    - content.tabs.link
+
+  palette:
+    
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      primary: deep orange
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      primary: deep orange
+      scheme: default 
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      primary: deep orange
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+
+
+markdown_extensions:
+  - meta
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      linenums: true
+  - pymdownx.superfences: 
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true 
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - def_list
+  - admonition
+  - pymdownx.details
+
+
+# ---------------------------------------------------------   Footer 
+copyright: Copyright &copy; 2016 - 2020 Martin Donath
+
+extra:
+  social:
+    - icon: fontawesome/brands/twitter 
+      link: https://twitter.com/squidfunk
+  
+  analytics: 
+    provider: google
+    property : G-XXXXX # todo
+    feedback:
+      title: Was this page helpful?
+      ratings:
+        - icon: material/emoticon-happy-outline
+          name: This page was helpful
+          data: 1
+          note: >-
+            Thanks for your feedback!
+        - icon: material/emoticon-sad-outline
+          name: This page could be improved
+          data: 0
+          note: >- 
+            Thanks for your feedback! Help us improve this page by
+            using our <a href="..." target=_blank>feedback form</a>.
+
+
+
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/extra.js
+
+
+# -----------------------------------------------------   # Page tree
+nav:
+  # - Home: 
+  #     -home/index.md
+  - Getting started:
+    - getting-started/index.md
+    - Overall concepts: getting-started/overall-concepts.md
+    - Installation: getting-started/installation.md
+    - Configuration: getting-started/configuration.md
+    - Create a workflow: /
+  - Advanced:
+    - advanced/index.md
+    - Drools: /
+    - Patterns: /
+    - Scheduler: /
+    - Shared objects: /
+    - Custom module: /
+  - Components:
+    - components/index.md
+    - Broker: components/broker.md
+    - Worker: /
+    - Database: /
+    - Dashboards: /
+  - Catalog:
+    - catalog/index.md
+    - Connectors:
+      - Sources: catalog/sources.md
+      - Content sources: catalog/content-sources.md
+      - Injectors: /
+    - Intermediates: 
+      - Transform: /
+      - Convert: /
+    - Credentials: /
+    - Tools: /
+    # - Helpers: /
+  - Cookbook:
+    - cookbook/index.md
+  - Blog:
+    - blog/index.md
+    - 2022:
+      - blog/2022/chinese-search-support.md
+    - 2021:
+      - blog/2021/the-past-present-and-future.md
+      - blog/2021/excluding-content-from-search.md
+      - blog/2021/search-better-faster-smaller.md
