@@ -133,6 +133,10 @@ nav:
     # - Helpers: /
   - Cookbook:
     - cookbook/index.md
+  - Release notes:
+    - release-notes/index.md
+    - v2.5.0: release-notes/2.5.0.md
+    - v2.4.7: release-notes/2.4.7.md
   - Blog:
     - blog/index.md
     - 2022:
