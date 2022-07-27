@@ -1,0 +1,8 @@
+:root > * {
+    --fast2-color:#1A97A7;
+    --md-primary-fg-color: var(--fast2-color);
+    --md-primary-fg-color--light: var(--fast2-color);
+    --md-primary-fg-color--dark: var(--fast2-color);
+
+    --md-typeset-a-color: var(--fast2-color)!important;
+}

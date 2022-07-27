@@ -1,7 +1,7 @@
 site_name: Fast2 documentation
 theme:
   name: material
-  logo: assets/Fast2_logo.png
+  logo: assets/Fast2_favicon_white.png
   favicon: assets/Fast2_logo.png
   features:
     - navigation.instant
@@ -44,7 +44,7 @@ markdown_extensions:
       permalink: true
   - pymdownx.highlight:
       anchor_linenums: true
-      linenums: true
+      # linenums: true
   - pymdownx.superfences: 
       custom_fences:
         - name: mermaid
@@ -62,7 +62,7 @@ markdown_extensions:
 
 
 # ---------------------------------------------------------   Footer 
-copyright: Copyright &copy; 2016 - 2020 Martin Donath
+copyright: Copyright &copy; 2019 - 2022 Fast2 — All rights reserved
 
 extra:
   social:
@@ -89,8 +89,8 @@ extra:
 
 
 
-extra_css:
-  - stylesheets/extra.css
+# extra_css:
+  # - stylesheets/extra.css
 
 extra_javascript:
   - javascripts/extra.js
@@ -104,37 +104,37 @@ nav:
     - getting-started/index.md
     - Overall concepts: getting-started/overall-concepts.md
     - Installation: getting-started/installation.md
+    - ⚠ Create a workflow: /
     - Configuration: getting-started/configuration.md
-    - Create a workflow: /
   - Advanced:
     - advanced/index.md
-    - Drools: /
-    - Patterns: /
-    - Scheduler: /
-    - Shared objects: /
-    - Optimization: /
-    - Custom module: /
+    - ⚠ Drools: /
+    - ⚠ Patterns: /
+    - ⚠ Scheduler: /
+    - ⚠ Shared objects: /
+    - ⚠ Optimization: /
+    - ⚠ Custom module: /
   - Components:
     - components/index.md
     - Broker: components/broker.md
-    - Worker: /
-    - Database: /
-    - Dashboards: /
+    - ⚠ Worker: /
+    - ⚠ Database: /
+    - ⚠ Dashboards: /
   - Catalog:
     - catalog/index.md
     - Connectors:
       - Sources: catalog/sources.md
       - Content sources: catalog/content-sources.md
-      - Injectors: /
+      - ⚠ Injectors: /
     - Intermediates: 
-      - Transform: /
-      - Convert: /
-    - Credentials: /
-    - Tools: /
-    # - Helpers: /
-  - Cookbook:
+      - ⚠ Transform: /
+      - ⚠ Convert: /
+    - ⚠ Credentials: /
+    - ⚠ Tools: /
+    # ⚠ - Helpers: /
+  - ⚠ Cookbook:
     - cookbook/index.md
-  - Release notes:
+  - ⚠ Release notes:
     - release-notes/index.md
     - v2.5.0: release-notes/2.5.0.md
     - v2.4.7: release-notes/2.4.7.md
