@@ -112,6 +112,7 @@ nav:
     - Patterns: /
     - Scheduler: /
     - Shared objects: /
+    - Optimization: /
     - Custom module: /
   - Components:
     - components/index.md
