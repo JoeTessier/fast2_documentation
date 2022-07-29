@@ -100,7 +100,9 @@ To end the Fast2 process, just hit `Ctrl+C` in the command line the startup file
     There are several ways to create a service under linux distribution. We will do it through systemd. 
     Its major benefit is that it has been the default init system for the majority of linux distributions (Ubuntu, Red Hat, Fedora...).
 
-    ##### Create a user for Fast2
+    <br />
+
+    ##### :material-numeric-1-circle: Create a user for Fast2
 
     Since the embedded database cannot be started in sudo mode, an additional user needs to be created in the Linux machine so the broker will successfully initiate the database bootup.
 
@@ -115,7 +117,9 @@ To end the Fast2 process, just hit `Ctrl+C` in the command line the startup file
     + su fast2user -c "$JAVA -Xmx$BROKER_MAX_MEMORY -jar fast2-broker-package-X.Y.Z.jar"
     ```
 
-    ##### Execution path
+    <br/>
+
+    ##### :material-numeric-2-circle: Execution path
 
     Edit the `ExectStart` field from the file `service/linux/fast2-broker.service` by changing the `PATH/TO/FAST2` portion: set it to Fast2 install path.
     
@@ -130,7 +134,10 @@ To end the Fast2 process, just hit `Ctrl+C` in the command line the startup file
     WantedBy=default.target
     ```
 
-    ##### Symbolic link
+    <br />
+
+    ##### :material-numeric-3-circle: Symbolic link
+
     Now link it to the `/etc/systemd/system` directory through a symbolic link.
 
     ```
@@ -158,7 +165,10 @@ To end the Fast2 process, just hit `Ctrl+C` in the command line the startup file
     Created symlink from /etc/systemd/system/default.target.wants/fast2-broker.service to /etc/systemd/system/fast2-broker.service.
     ```
 
-    ##### Script uses
+    <br />
+    
+    ##### :material-numeric-4-circle: Script uses
+    
     Test your script by starting it and then checking the status :
 
     ```

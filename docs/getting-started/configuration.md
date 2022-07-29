@@ -16,7 +16,7 @@ Among all these components, you can find :
 - the [background database](#configure-the-background-database)
 - the [dashboard add-on](#configure-the-dashboard-add-on)
 
-## Configure the broker
+## :material-chef-hat: Configure the broker
 Depending on the amount of documents you are dealing with, you may want to control max memory usage allowed (Xmx) for broker. 
 
 The `<FAST2_HOME>/config/env.properties` file is configured by default to 1GB for this resource :
@@ -29,7 +29,7 @@ BROKER_MAX_MEMORY=1G
 
 If the campaign are involving a couple of millions of documents, increasing this value to 8GB or 16GB will help increasing the performance rate of the migration.
 
-## Configure the worker(s)
+## :material-hard-hat: Configure the worker(s)
 Depending on the amount of documents and the number of tasks you are dealing with, you may want to control max memory usage allowed (Xmx) for worker.
 
 The default setting is 1GB for this resource:

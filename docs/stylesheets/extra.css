@@ -6,3 +6,9 @@
 
     --md-typeset-a-color: var(--fast2-color)!important;
 }
+
+/* Not working atm */
+a.external-link:link::after {
+    content: "\e732" ;
+    display: inline-block;
+}
