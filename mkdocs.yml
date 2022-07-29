@@ -7,11 +7,13 @@ theme:
   features:
     - navigation.instant
     # - navigation.tracking
-    - navigation.tabs
-    - navigation.sections
+    
+    # - navigation.tabs # main parts in top banner
+    - navigation.indexes # hides */index.md in left lateral nav
+
+    # - navigation.sections
     - navigation.top # 'Back to top' when scrolling up
-    - navigation.indexes
-    - content.tabs.link
+    - content.tabs.link # for Linux/windows tabs
 
   palette:
     
