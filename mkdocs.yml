@@ -12,8 +12,12 @@ theme:
     - navigation.indexes # hides */index.md in left lateral nav
 
     # - navigation.sections
+    - navigation.expand
     - navigation.top # 'Back to top' when scrolling up
-    - content.tabs.link # for Linux/windows tabs
+    - content.tabs.link # for Linux/windows tab
+    - search.suggest
+    - search.highlight
+    - search.share
 
   palette:
     
