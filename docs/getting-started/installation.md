@@ -18,18 +18,35 @@ While setting up the production server for Fast2, make sure to scale the Fast2 m
 Make sure to confirm the compatibility between Elasticsearch and your environment at [Elasticsearch Support Matrix](https://www.elastic.co/fr/support/matrix).
 
 ## Fast2 packages
+
 The Fast2 distribution you need depends on your target environment. It exists three way to deploy a Fast2 :
+
 - On premise: regular package, as an all-in-one zip file
 - AWS: Standard AMIs
 - K8S: Docker Images
 
 Each distribution ships the following
+
 - A broker with one embedded worker and a user interface
 - An additional worker with all tasks catalog
 - A template to create workers with custom tasks
 
 ## Root folder anatomy
-{{< image "documentation/rootFolder.png" "Root folder anatomy" "50%">}}
+
+|Item|Purpose|
+|---|---|
+|:material-folder: config|Configuration files, broker endpoint, Java home|
+|:material-folder: logs|Logging files for both broker and worker(s)|
+|:material-folder: maps|XML files of all maps accessible from the UI|
+|:material-folder: database|Either Elasticsearch or OpenSearch|
+|:material-folder: service|All files required to start Fast2 as a service|
+|:material-folder: worker-libs/*|All libraries and dependencies for tasks executions|
+|:fontawesome-brands-java: fast2-broker-package-X.Y.Z.jar|Broker unit|
+|:fontawesome-brands-java: fast2-worker-package-X.Y.Z.jar|Worker main unit|
+|:material-microsoft-windows: startup-broker.bat|Binary file for Windows|
+|:fontawesome-brands-linux: startup-broker.sh|Binary file for Linux|
+|:material-microsoft-windows: startup-worker.bat|Binary file for Windows|
+|:fontawesome-brands-linux: startup-worker.sh|Binary file for Linux|
 
 ## Start Fast2 Broker
 Once the regular Fast2 package is unzipped, Fast2 can be launched right away.

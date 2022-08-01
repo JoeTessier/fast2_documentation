@@ -40,6 +40,9 @@ theme:
         icon: material/brightness-4
         name: Switch to system preference
 
+  font: 
+    text: Nunito
+
 
 markdown_extensions:
   - meta
@@ -56,13 +59,16 @@ markdown_extensions:
           format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
       alternate_style: true 
-  - attr_list
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
   - def_list
   - admonition
   - pymdownx.details
+  # for images, caption and lazy-loading
+  - attr_list
+  - md_in_html
+
 
 
 # ---------------------------------------------------------   Footer 
@@ -97,8 +103,8 @@ extra:
 
 
 
-# extra_css:
-  # - stylesheets/extra.css
+extra_css:
+  - stylesheets/extra.css
 
 extra_javascript:
   - javascripts/extra.js
@@ -113,7 +119,7 @@ nav:
     - Overall concepts: getting-started/overall-concepts.md
     - Installation: getting-started/installation.md
     - ⚠ Create a workflow: /
-    - Configuration: getting-started/configuration.md
+    # - Configuration: getting-started/configuration.md
   - Advanced:
     - advanced/index.md
     - ⚠ Drools: /
@@ -125,9 +131,9 @@ nav:
   - Components:
     - components/index.md
     - Broker: components/broker.md
-    - ⚠ Worker: /
-    - ⚠ Database: /
-    - ⚠ Dashboards: /
+    - Worker: components/worker.md
+    - Database: components/database.md
+    - Dashboards: components/dashboards.md
   - Catalog:
     - catalog/index.md
     - Connectors:
