@@ -119,26 +119,26 @@ nav:
   # - Home: 
   #     -home/index.md
   - Getting started:
-    - getting-started/index.md
+    # - getting-started/index.md
     - Overall concepts: getting-started/overall-concepts.md
     - Installation: getting-started/installation.md
     - ⚠ Create a workflow: /
     # - Configuration: getting-started/configuration.md
   - Advanced:
-    - advanced/index.md
-    - ⚠ Drools: /
-    - ⚠ Patterns: /
-    - ⚠ Scheduler: /
-    - ⚠ Shared objects: /
-    - ⚠ Optimization: /
-    - ⚠ Custom module: /
+    # - advanced/index.md
+    - ⚠ Drools: advanced/drools.md
+    - ⚠ Patterns: advanced/patterns.md
+    - ⚠ Scheduler: advanced/scheduler.md
+    - ⚠ Shared objects: advanced/shared-objects.md
+    - ⚠ Optimization: advanced/optimization.md
+    - ⚠ Custom module: advanced/custom-module.md
   - Components:
     - components/index.md
     - Broker: components/broker.md
     - Worker: components/worker.md
     - Database: components/database.md
     - Dashboards: components/dashboards.md
-  - Catalog:
+  - ⚠ Catalog:
     - catalog/index.md
     - Connectors:
       - Sources: catalog/sources.md
@@ -156,7 +156,7 @@ nav:
     - release-notes/index.md
     - v2.5.0: release-notes/2.5.0.md
     - v2.4.7: release-notes/2.4.7.md
-  - Blog:
+  - ⚠ Blog:
     - blog/index.md
     - 2022:
       - blog/2022/chinese-search-support.md
