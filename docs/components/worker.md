@@ -4,7 +4,9 @@
 
     The Worker is the punnet processor, applying the changes onto the punnet, according to how the tasks have been configured by the user.
 
-The workers! Corner stones of Fast2, these guys can litterally add up and constitute a real digitized hive working to migrate your documents, your contents, your rules, your metadata, all synchronously, exactly where you expect them (or asked them to be), never stepping on each other. No migration project could be overcome if it was not by them!
+The workers! Corner stones of Fast2, these guys can litterally add up and constitute a real digitized hive working to migrate your documents,
+your contents, your rules, your metadata, all synchronously, exactly where you expect them (or asked them to be), never stepping on each other.
+No migration project could be overcome if it was not by them!
 
 If they role can seem quite important, they are paradoxically as easy and straight forward to get up and running. Just the right files to gather, as mentioned here, and a new worker just enrolled!
 
@@ -19,6 +21,8 @@ The required files for the worker to run properly are the following:
 | :fontawesome-brands-java: fast2-worker-package-X.Y.Z.jar | Worker main unit                                    |
 | :material-microsoft-windows: startup-worker.bat          | Binary file for Windows                             |
 | :fontawesome-brands-linux: startup-worker.sh             | Binary file for Linux                               |
+
+### Memory allocation
 
 Depending on the amount of documents and the number of tasks you are dealing with, you may want to control max memory usage allowed (`Xmx`) for worker.
 
@@ -38,7 +42,11 @@ Keep in mind that this property is designed for workers started from the binary 
 broker.embeddedworker.max.memory=1G
 ```
 
-Workers have to be declared queues for them to process the punnets stored in these sames _queues_.
+### Queues management
+
+Queues have to be declared to the workers for them to process the punnets stored in these sames _queues_.
+
+The queues names will also be declared in the tasks configuration panel, so the only worker in charge of executing a task with a defined queue will be the worker whose queue regex matched this very queue.
 
 In order to have specific worker tied to particular queues, the configuration needs to be updated here:
 
@@ -49,7 +57,8 @@ In order to have specific worker tied to particular queues, the configuration ne
 
 ## :octicons-zap-24: Advanced use
 
-One of the major aspects of a promising migration project is what all project managers will ask you to vouch for: performance metrics. Let’s suppose you need to migrate documents from a source system into a second one, the latter having a much higher input flow tolerance. No need for empirical statistics to know that the old ECM will be the bottleneck. An architecture similar to a hybrid deployment variant (topic we presented [here](#)) could easily be envisioned. But let’s complicate things a little bit here: in-between the extraction and the injection phase, the metadata have to be updated, with new date formatting and heavy mapping of document related properties. Can still a hybrid-like architecture save you now ?
+One of the major aspects of a promising migration project is what all project managers will ask you to vouch for: performance metrics.
+Let’s suppose you need to migrate documents from a source system into a second one, the latter having a much higher input flow tolerance. No need for empirical statistics to know that the old ECM will be the bottleneck. An architecture similar to a hybrid deployment variant (topic we presented [here](#)) could easily be envisioned. But let’s complicate things a little bit here: in-between the extraction and the injection phase, the metadata have to be updated, with new date formatting and heavy mapping of document related properties. Can still a hybrid-like architecture save you now ?
 
 ### How to set up
 
@@ -69,7 +78,8 @@ Just like any architectural decisions, such model comes with is drawbacks and be
 
 #### Resource sharing
 
-Let’s consider a migration server with 8GB of RAM (which is a pretty good start, don’t get me wrong): with a running database in the background — the embedded Elasticsearch instance which Fast2 relies on in terms of traceability — needing roughly 3GB, the operating system using 3GB as well, you’ll end up with only 2GB for your worker to open around 100 documents per second and performing content conversion, metadata transformation etc. Needless to say, adding a second worker won’t help you much here !
+Let’s consider a migration server with 8GB of RAM (which is a pretty good start, don’t get me wrong):
+with a running database in the background — the embedded Elasticsearch instance which Fast2 relies on in terms of traceability — needing roughly 3GB, the operating system using 3GB as well, you’ll end up with only 2GB for your worker to open around 100 documents per second and performing content conversion, metadata transformation etc. Needless to say, adding a second worker won’t help you much here !
 
 Increase the threads amount (which you can do in the server configuration, straight from the Fast2 UI) of the queues on which you worker will get the punnets to process will surely be the go-to way for increasing your current performances.
 
