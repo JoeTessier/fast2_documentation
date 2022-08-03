@@ -1,19 +1,20 @@
 ---
-weight : 10
-draft : false
+weight: 10
+draft: false
 
-title : Installation
-icon : las la-laptop-code
-
+title: Installation
+icon: las la-laptop-code
 ---
+
 ## Requirements
-The installation of Fast2 requires a few environment specifications to run properly : 
 
-* JRE8, JRE11 : you can either get it from Oracle or [OpenJDK](https://developers.redhat.com/products/openjdk/download). If you have multiple JDK/JRE already installed, point out the correct one in the `config/env.properties` file of the Fast2 installation folder.
-* RAM : we highly recommend having 8GB or more, although 4GB might be enough for design stage.
-* Processor : 8 CPUs.
+The installation of Fast2 requires a few environment specifications to run properly :
 
-While setting up the production server for Fast2, make sure to scale the Fast2 machine accordingly. You may need to increase the allocated memory for both the broker and the background database. If you planned to deal with campaigns of a few millions of documents, setting **8GB** of memory for the [broker](/documentation/configuration/#configure-the-broker) and **8GB** for the [database](/documentation/elasticsearch/#memory) as well is a good starting point. 
+- JRE8, JRE11 : you can either get it from Oracle or [OpenJDK](https://developers.redhat.com/products/openjdk/download). If you have multiple JDK/JRE already installed, point out the correct one in the `config/env.properties` file of the Fast2 installation folder.
+- RAM : we highly recommend having 8GB or more, although 4GB might be enough for design stage.
+- Processor : 8 CPUs.
+
+While setting up the production server for Fast2, make sure to scale the Fast2 machine accordingly. You may need to increase the allocated memory for both the broker and the background database. If you planned to deal with campaigns of a few millions of documents, setting **8GB** of memory for the [broker](/documentation/configuration/#configure-the-broker) and **8GB** for the [database](/documentation/elasticsearch/#memory) as well is a good starting point.
 
 Make sure to confirm the compatibility between Elasticsearch and your environment at [Elasticsearch Support Matrix](https://www.elastic.co/fr/support/matrix).
 
@@ -21,9 +22,9 @@ Make sure to confirm the compatibility between Elasticsearch and your environmen
 
 The Fast2 distribution you need depends on your target environment. It exists three way to deploy a Fast2 :
 
-- On premise: regular package, as an all-in-one zip file
-- AWS: Standard AMIs
-- K8S: Docker Images
+&nbsp;&nbsp;&nbsp;&nbsp;:material-folder-zip-outline: On premise: regular package, as an all-in-one zip file<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:fontawesome-brands-aws: AWS: Standard AMIs<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:material-docker: K8S: Docker Images
 
 Each distribution ships the following
 
@@ -33,31 +34,40 @@ Each distribution ships the following
 
 ## Root folder anatomy
 
-|Item|Purpose|
-|---|---|
-|:material-folder: config|Configuration files, broker endpoint, Java home|
-|:material-folder: logs|Logging files for both broker and worker(s)|
-|:material-folder: maps|XML files of all maps accessible from the UI|
-|:material-folder: database|Either Elasticsearch or OpenSearch|
-|:material-folder: service|All files required to start Fast2 as a service|
-|:material-folder: worker-libs/*|All libraries and dependencies for tasks executions|
-|:fontawesome-brands-java: fast2-broker-package-X.Y.Z.jar|Broker unit|
-|:fontawesome-brands-java: fast2-worker-package-X.Y.Z.jar|Worker main unit|
-|:material-microsoft-windows: startup-broker.bat|Binary file for Windows|
-|:fontawesome-brands-linux: startup-broker.sh|Binary file for Linux|
-|:material-microsoft-windows: startup-worker.bat|Binary file for Windows|
-|:fontawesome-brands-linux: startup-worker.sh|Binary file for Linux|
+| Item                                                     | Purpose                                             |
+| -------------------------------------------------------- | --------------------------------------------------- |
+| :material-folder: config                                 | Configuration files, broker endpoint, Java home     |
+| :material-folder: logs                                   | Logging files for both broker and worker(s)         |
+| :material-folder: maps                                   | XML files of all maps accessible from the UI        |
+| :material-folder: database                               | Either Elasticsearch or OpenSearch                  |
+| :material-folder: service                                | All files required to start Fast2 as a service      |
+| :material-folder: worker-libs/\*                         | All libraries and dependencies for tasks executions |
+| :fontawesome-brands-java: fast2-broker-package-X.Y.Z.jar | Broker unit                                         |
+| :fontawesome-brands-java: fast2-worker-package-X.Y.Z.jar | Worker main unit                                    |
+| :material-microsoft-windows: startup-broker.bat          | Binary file for Windows                             |
+| :fontawesome-brands-linux: startup-broker.sh             | Binary file for Linux                               |
+| :material-microsoft-windows: startup-worker.bat          | Binary file for Windows                             |
+| :fontawesome-brands-linux: startup-worker.sh             | Binary file for Linux                               |
+
+## Start-up sequence
+
+When Fast2 is started, either as a standalone application or a service, its different modules share a precisely defined roll-out schedule:
+
+- First, the broker and its internal databse are started. The connection between these 2 components has to be effective, otherwise Fast2 will automatically shut down after a couple of attempts to reach the database;
+- The worker is then triggered, and has to register itself to the broker.
+- Finally, the dashboard will be started if asked so, and if the binaries have been detected. First, Fast2 will try to connect to any dashboard instance running on the configured port.
+
+There is no direct connection between the broker and the dashboard. The only exchange area is the Elasticsearch database, as explained in the [architecture section](/getting-started/overall-concepts/#architecture).
 
 ## Start Fast2 Broker
-Once the regular Fast2 package is unzipped, Fast2 can be launched right away.
 
 Once the regular Fast2 package is unzipped, Fast2 can be launched right away.
 
 Whether Fast2 is launched from the batch file or as a service on your environment, the UI will be available at [http://localhost:1789/]().
 
-By default, Fast2 Broker starts an embedded Elastic Search and an embedded Fast2 Worker. 
+By default, Fast2 Broker starts an embedded Elastic Search and an embedded Fast2 Worker.
 
-All commands below are to be run under the Fast2 install path (where the Zip has been unzipped). 
+All commands below are to be run under the Fast2 install path (where the Zip has been unzipped).
 
 ### From command line
 
@@ -68,29 +78,27 @@ All commands below are to be run under the Fast2 install path (where the Zip has
     ```cmd
     C:\path-to-fast2\> startup-broker.bat
     ```
- 
-    Administrator rights might be required since Fast2 will handle some port communications. 
+
+    Administrator rights might be required since Fast2 will handle some port communications.
 
 === ":fontawesome-brands-linux: Linux"
 
-    The following Linux installation steps work for most of Unix-based sytems. 
+    The following Linux installation steps work for most of Unix-based sytems.
     Elasticsearch cannot be started from root user, you will need to create a secondary user to start the database binary alongside your Fast2 process.
 
     Once connected as the latter user, start Elasticsearch via its binaries.
 
-    Then, since you started Elasticsearch manually, disable the command triggering Fast2 to start the embedded Elasticsearch, from the `config/application.properties` file : 
+    Then, since you started Elasticsearch manually, disable the command triggering Fast2 to start the embedded Elasticsearch, from the `config/application.properties` file :
 
     ```log
     broker.elasticsearch.embedded.enabled=false
     ```
 
-    You can now properly execute the following script: 
+    You can now properly execute the following script:
 
     ```
     $ ./startup-broker.sh
     ```
-    
-    To quit the Fast2 process, just hit `Ctrl+C` in the command line the startup file opened.
 
 To end the Fast2 process, just hit `Ctrl+C` in the command line the startup file opened.
 
@@ -100,7 +108,7 @@ To end the Fast2 process, just hit `Ctrl+C` in the command line the startup file
 
     Go into the Fast2 installation folder, and open the Windows Command Prompt.
 
-    To install the service : 
+    To install the service :
 
     ```cmd
     C:\path-to-fast2\service\windows> Fast2_broker_service.exe install
@@ -114,7 +122,7 @@ To end the Fast2 process, just hit `Ctrl+C` in the command line the startup file
 
 === ":fontawesome-brands-linux: Linux"
 
-    There are several ways to create a service under linux distribution. We will do it through systemd. 
+    There are several ways to create a service under linux distribution. We will do it through systemd.
     Its major benefit is that it has been the default init system for the majority of linux distributions (Ubuntu, Red Hat, Fedora...).
 
     <br />
@@ -123,9 +131,9 @@ To end the Fast2 process, just hit `Ctrl+C` in the command line the startup file
 
     Since the embedded database cannot be started in sudo mode, an additional user needs to be created in the Linux machine so the broker will successfully initiate the database bootup.
 
-    Let's condider here our user to be *fast2user*. 
+    Let's condider here our user to be *fast2user*.
 
-    Head out to the `./startup-broker.sh` and get the user start the broker by switching users (with `su fast2user -c`) for the Java command. 
+    Head out to the `./startup-broker.sh` and get the user start the broker by switching users (with `su fast2user -c`) for the Java command.
 
     The result should be as follows:
 
@@ -139,7 +147,7 @@ To end the Fast2 process, just hit `Ctrl+C` in the command line the startup file
     ##### :material-numeric-2-circle: Execution path
 
     Edit the `ExectStart` field from the file `service/linux/fast2-broker.service` by changing the `PATH/TO/FAST2` portion: set it to Fast2 install path.
-    
+
     ```
     [Unit]
     Description=Fast2 Broker
@@ -183,24 +191,24 @@ To end the Fast2 process, just hit `Ctrl+C` in the command line the startup file
     ```
 
     <br />
-    
+
     ##### :material-numeric-4-circle: Script uses
-    
+
     Test your script by starting it and then checking the status :
 
-    ```
+    ```sh
     $ service fast2-broker start
-
     $ service fast2-broker status
+    ```
 
     OR
 
+    ```sh
     $ systemctl start fast2-broker.service
-
     $ systemctl status fast2-broker.service
     ```
 
-    You can restart or stop the service at anytime with the commands : 
+    You can restart or stop the service at anytime with the commands :
 
     ```
     $ service fast2 start | restart | stop | status
@@ -228,5 +236,3 @@ If the worker and broker are not booted up on the same machine, you need to setu
 Edit the file `config/application.properties` and modify `broker.host` accordingly.
 
 You can setup Fast2 Worker as a service the same way you did for the Fast2 Broker.
-
-

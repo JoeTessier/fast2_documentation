@@ -1,15 +1,14 @@
-#  Internal database
+# Internal database
 
 !!! Warning
 
-    Prior to the v2.5, Fast2 was relying on an Elasticsearch database. This component has been dropped in favor of OpenSearch. 
+    Prior to the v2.5, Fast2 was relying on an Elasticsearch database. This component has been dropped in favor of OpenSearch.
 
-    However the configuration of these two databases are very close (if not identical). 
-
+    However the configuration of these two databases are very close (if not identical).
 
 Every object passing through Fast2 is stored into an internal database. Whether carried by the document or the punnet, all metadata are recorded in the warehouse. The major benefit of such architecture is the opportunity to check whether everything is going well by making counters about documents/data processed during your migrations.
 
-In addition, we can easily rollback or resume operations in case of server crash. Nothing will be lost as Fast2 will precisely know where it all stopped. 
+In addition, we can easily rollback or resume operations in case of server crash. Nothing will be lost as Fast2 will precisely know where it all stopped.
 
 There is the logic behind real-time backups in ES.
 
@@ -21,20 +20,22 @@ For example, the campaign `MyCampaign_Try10` will be stored in the index f2_myca
 
 During the step of broker intantiation at Fast2 startup, some indices are automatically created:
 
-|Index key|Description|
-|---:|---|
-|f2_campaigns|List of existing campaigns with processing dates and status|
-|f2_campaigns_sources|Links between campaigns and workers having performed this campaign|
-|f2_queue_settings|Reference information about source and task threads|
-|f2_jobs_settings|Gather the configuration of save jobs|
-|f2_jobs_info|Information about jobs past execution details|
+|            Index key | Description                                                        |
+| -------------------: | ------------------------------------------------------------------ |
+|         f2_campaigns | List of existing campaigns with processing dates and status        |
+| f2_campaigns_sources | Links between campaigns and workers having performed this campaign |
+|    f2_queue_settings | Reference information about source and task threads                |
+|     f2_jobs_settings | Gather the configuration of save jobs                              |
+|         f2_jobs_info | Information about jobs past execution details                      |
 
 For each new campaign of Fast2, an index will be created: if you decided to run a new campaign named `EcmInjection`, the new index will be `f2_ecminjection_try1`.
 
 ## :material-database-cog: Configuration
 
+### With or without
+
 For an optimal migration setup, this third-party software can be easily configured at different levels to match you needs at most !
-If required, it can even be disabled at will. 
+If required, it can even be disabled at will.
 
 === "v2.4-"
 
@@ -47,7 +48,6 @@ If required, it can even be disabled at will.
     ```ini title="./config/applications.properties"
     broker.opensearch.embedded.enabled=true
     ```
-
 
 ### Port
 
@@ -65,7 +65,6 @@ Since Elasticsearch has to be reach from both Fast2 broker and Kibana module —
     |./elasticsearch-X.Y.Z/config/elasticsearch.yml|`http.port: <es-port>`|
     |./kibana-X.Y.Z/config/kibana.yml|`elasticsearch.hosts: ["http://localhost:<es-port>"]`|
 
-
 === "v2.5+"
 
     |File|Specification|
@@ -73,6 +72,20 @@ Since Elasticsearch has to be reach from both Fast2 broker and Kibana module —
     |./config/application.properties|`opensearch.port=1790`|
     |./opensearch-X.Y.Z/config/opensearch.yml|`http.port: <es-port>`|
     |./opensearch-dashboards-X.Y.Z/config/opensearch_dashboards.yml|`opensearch.hosts: ["http://localhost:<es-port>"]`|
+
+If the dashboard component is installed, the database port also needs to be updated on this front as the dashboard needs to access the DB in order to read the data :
+
+=== "v2.4-"
+
+    ```ini title="./kibana-X.Y.Z/config/kibana.yml"
+    elasticsearch.hosts: ["http://<DB-server:DB-port>"]
+    ```
+
+=== "v2.6+"
+
+    ```ini title="./opensearch-dashboards-X.Y.Z/config/opensearch_dashboards.yml"
+    opensearch.hosts: ["http://<DB-server:DB-port>"]
+    ```
 
 <br />
 
@@ -84,11 +97,11 @@ Head out to the `./opensearch-X.X.X/config/jvm.options` file.
 
 The configuration required are the following:
 
-Configuration|Purpose
----:|:---
-`-Xms4g`|This setting will allocate 4GB of RAM to the Elasticsearch JVM heap, directly on startup.
-`-Xmx8g`|Here, you specify the maximum memory which can be used, if available, by the database.
-`−XX:MaxDirectMemorySize=4g`|A Java process/service doesn't use only the amount of memory defined for the JVM Heap but it will make use native (off-heap) memory. <br/>For a JVM Max Heap size of 4GB, in recent versions of Elasticsearch is going to limit the `XX:MaxDirectMemorySize` to 50% of the JVM Max Heap size (2GB in our case) for direct memory.
+|                Configuration | Purpose                                                                                                                                                                                                                                                                                                                           |
+| ---------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|                     `-Xms4g` | This setting will allocate 4GB of RAM to the Elasticsearch JVM heap, directly on startup.                                                                                                                                                                                                                                         |
+|                     `-Xmx8g` | Here, you specify the maximum memory which can be used, if available, by the database.                                                                                                                                                                                                                                            |
+| `−XX:MaxDirectMemorySize=4g` | A Java process/service doesn't use only the amount of memory defined for the JVM Heap but it will make use native (off-heap) memory. <br/>For a JVM Max Heap size of 4GB, in recent versions of Elasticsearch is going to limit the `XX:MaxDirectMemorySize` to 50% of the JVM Max Heap size (2GB in our case) for direct memory. |
 
 For further comprehension of these parameters, check out the [Elasticsearch official documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/important-settings.html#heap-size-settings) on the topic.
 Upgrading the metrics will prevent `java.lang.OutOfMemoryError` to pop up during heavy migration executions.
@@ -98,26 +111,28 @@ Upgrading the metrics will prevent `java.lang.OutOfMemoryError` to pop up during
 <!-- Still uptodate ??
 ## Database without dashboards
 
-To visualize data stored in the database without using the dashboard addon proposed, we recommend to use web navigator plugins. These GUIs are focused on visualisation of your documents as tables, more easily than with Kibana. You can browse your data as classic SQL tables. The downside is ElasticVue does not offer any metrics, graphs or anaytics options. 
+To visualize data stored in the database without using the dashboard addon proposed, we recommend to use web navigator plugins. These GUIs are focused on visualisation of your documents as tables, more easily than with Kibana. You can browse your data as classic SQL tables. The downside is ElasticVue does not offer any metrics, graphs or anaytics options.
 
 Two different plugins exist, depending on your web navigator:
 * [ElasticVue](https://elasticvue.com/) under Mozilla Firefox, MS Edge and Google Chrome;
 * [ElasticSearch Head](https://chrome.google.com/webstore/detail/elasticsearch-head/ffmkiejjmecolpfloofpjologoblkegm) only for Google Chrome.
 
 -->
-<br /> 
+<br />
 
 ## Troubleshooting
 
 In reason of the tight commmunication between the broker and the database, chances are you will soon be reported 500 server error generated by unsuccessful exchanges of the two entities.
 
 ### Server error 500 when starting a campaign
-After running quite a bunch of campaigns, you might end up not being able to start anymore of them due to the limit of shards of the Elasticsearch database (for more in-depth details about the shards, checkout the [Official Elasticsearch documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/scalability.html)). 
 
-The symptom of this limitations comes as a regular 500 server error toast in the UI, but is is by checking the logs/broker.log file that its raw nature is exposed: 
+After running quite a bunch of campaigns, you might end up not being able to start anymore of them due to the limit of shards of the Elasticsearch database (for more in-depth details about the shards, checkout the [Official Elasticsearch documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/scalability.html)).
+
+The symptom of this limitations comes as a regular 500 server error toast in the UI, but is is by checking the logs/broker.log file that its raw nature is exposed:
+
 ```log
 17:24:45.017 [http-nio-1789-exec-17] ERROR org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]:175 - Exception while dispatching incoming RPC call com.google.gwt.user.server.rpc.UnexpectedException: Service method 'public abstract com.fast2.model.taskflow.Campaign com.fast2.hmi.gwt.client.service.GWTCampaignManager.startProcessing(
-    com.fast2.model.taskflow.Campaign,com.fast2.model.taskflow.design.TaskFlowMapRef,boolean)' threw an unexpected exception: 
+    com.fast2.model.taskflow.Campaign,com.fast2.model.taskflow.design.TaskFlowMapRef,boolean)' threw an unexpected exception:
     java.lang.RuntimeException: Caught exception Elasticsearch exception [type=validation_exception, reason=Validation Failed: 1: this action would add [2] total shards, but this cluster currently has [1000]/[1000] maximum shards open;]
 	...
 Caused by: org.elasticsearch.ElasticsearchStatusException: Elasticsearch exception [type=validation_exception, reason=Validation Failed: 1: this action would add [2] total shards, but this cluster currently has [1000]/[1000] maximum shards open;]
@@ -126,23 +141,24 @@ Caused by: org.elasticsearch.ElasticsearchStatusException: Elasticsearch excepti
 As mentioned in the [Elasticsearch technicalities](#index-names), Fast2 records data under indices prefixed with `f2_`. Thus it implies to begin each index to delete with this prefix.
 
 Although a drastic cleanu-up induced by a `curl -X DELETE -i "http://<elasticsearch-server>:<elasticsearch-port>/f2_*` would resolve our issue, you might be interested in keeping some campaigns or indices. As any _curl_ query allows, exceptions can be added to the deletion operation to prevent them from being removed of the backup database. The syntax goes as follows:
+
 ```shell
-curl -X DELETE -i "http://<elasticsearch-server>:<elasticsearch-port>/f2_*,-f2_campaigns,-f2_campaigns_sources[,-f2_<campaign-name>]" 
+curl -X DELETE -i "http://<elasticsearch-server>:<elasticsearch-port>/f2_*,-f2_campaigns,-f2_campaigns_sources[,-f2_<campaign-name>]"
 ```
+
 <br/>
 <br/>
 Let us now study this query:
 <br/>
 <br/>
 
-|Section|Purpose|
-|---|---|
-http://server:port/f2_*|Here we ask to aim at all indices starting with the `f2_` prefix. This will prevent the deletion of additional indices which could be related to parallel work on the same Elasticsearch instance, such as Kibana reports, charts or data analysis.
-`-f2_campaigns,-f2_campaigns_sources`|These 2 indices are needed if you decide to keep any other campaign. The `-` sign declares them as exception from the delete action.
-`[,-f2_<campaign-name>]`|Then you can list all the campaigns you are willing to preserve, <ul><li>without space,</li><li>separated by commas (`,`)</li><li>mentioning the `-` exclusion character</li></ul>Do not forget to begin each name with the indice prefix.
+| Section                               | Purpose                                                                                                                                                                                                                                             |
+| ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| http://server:port/f2\_\*             | Here we ask to aim at all indices starting with the `f2_` prefix. This will prevent the deletion of additional indices which could be related to parallel work on the same Elasticsearch instance, such as Kibana reports, charts or data analysis. |
+| `-f2_campaigns,-f2_campaigns_sources` | These 2 indices are needed if you decide to keep any other campaign. The `-` sign declares them as exception from the delete action.                                                                                                                |
+| `[,-f2_<campaign-name>]`              | Then you can list all the campaigns you are willing to preserve, <ul><li>without space,</li><li>separated by commas (`,`)</li><li>mentioning the `-` exclusion character</li></ul>Do not forget to begin each name with the indice prefix.          |
 
 <br/>
-
 
 Wildcards are supported, therefore an exception written `-f2_mycampaign*` will protect all the campaign with this _myCampaign_ radical (ex/ myCampaign_Try1, myCampaign_Try2...).
 
@@ -158,14 +174,12 @@ Suppressed: org.elasticsearch.client.ResponseException: method [POST], host [htt
 To fix this, you need to stop Fast2 (and the database), and add the following line:
 
 ```yml title="./elasticsearch-X.Y.Z/config/elasticsearch.yml"
-search.max_buckets: 1000000 
+search.max_buckets: 1000000
 ```
-
 
 ## Let's quickly wrap up, here
 
-This integrated database guarantees data persistence to Fast2. If required, an Elasticsearch database can be shared among several Fast2 servers. 
+This integrated database guarantees data persistence to Fast2. If required, an Elasticsearch database can be shared among several Fast2 servers.
 
 <br/>
 Allocated resources should be increased in order to resist charge of production environments.
-

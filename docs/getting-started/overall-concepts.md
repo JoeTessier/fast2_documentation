@@ -1,6 +1,6 @@
-  [map]: #map
-  [campaign]: #campaign
-  [content]: #content
+[map]: #map
+[campaign]: #campaign
+[content]: #content
 
 # What you need to know before committing to Fast2
 
@@ -12,31 +12,31 @@
 
 **Punnet**
 
-:   The Punnet is the pivot format which is used for data mapping, content conversions and folder management. This is the migration entity, processed and then forwarded by the workflow tasks.
+: The Punnet is the pivot format which is used for data mapping, content conversions and folder management. This is the migration entity, processed and then forwarded by the workflow tasks.
 
 **Task**
 
-: A task is either an extract-, transform- or injection-step that composes a workflow. Each task can be configured to match the user’s needs. Once all tasks are completed in the specific order, the migration is over. 
+: A task is either an extract-, transform- or injection-step that composes a workflow. Each task can be configured to match the user’s needs. Once all tasks are completed in the specific order, the migration is over.
 
 **Map**
 
-: A workflow (aka *"Map"*) is a succession of tasks, where the output of the ones is the input of the following others. Each task can be considered as a step of the workflow.
+: A workflow (aka _"Map"_) is a succession of tasks, where the output of the ones is the input of the following others. Each task can be considered as a step of the workflow.
 
 **Campaign**
 
-: A campaign is the perimeter where a map is executed (once or several times). Different campaigns can either be cumulative or independent. 
+: A campaign is the perimeter where a map is executed (once or several times). Different campaigns can either be cumulative or independent.
 
 **Worker**
 
-:   The Worker is the punnet processor, applying the changes onto the punnet, according to how the tasks have been configured by the user. 
+: The Worker is the punnet processor, applying the changes onto the punnet, according to how the tasks have been configured by the user.
 
-    They are waiting in silence to do their job. When a punnet needs to be processed by a task, the broker triggers the assigned worker. 
+    They are waiting in silence to do their job. When a punnet needs to be processed by a task, the broker triggers the assigned worker.
 
     If the workload is too important, you can manually add workers to speed up processing.
 
 **Broker**
 
-:   The broker is the trump card of the migration. It is basically the workflow orchestrator, in charge of database communication, sending punnets to the worker(s) for them to process the operations.
+: The broker is the trump card of the migration. It is basically the workflow orchestrator, in charge of database communication, sending punnets to the worker(s) for them to process the operations.
 
     Scheduling, orchestrating or even managing queues : the broker is everywhere.
 
@@ -54,10 +54,10 @@
 Folder object represents a folder in the ECM or file system sense, and can have metadata as well as links to documents
 
 !!! info
-    
+
     This type can be included into punnets and documents, and folders themselves.
 
-``` 
+```
 ㄴ folder
 	ㄴ name
 	ㄴ path
@@ -118,7 +118,7 @@ Annotation object represents an annotation (post-its, arrow…) affixed to the c
 	ㄴ ID
 	ㄴ content
 ```
-  
+
 ### Document
 
 A document can also contains its own data, its content with annotations and the folder where it is stored.
@@ -126,7 +126,6 @@ A document can also contains its own data, its content with annotations and the 
 !!! info
 
     This type can be included into punnets and workflows.
-
 
 ```
 ㄴ document
@@ -151,7 +150,7 @@ A document can also contains its own data, its content with annotations and the 
 
 ### Punnet
 
-As introduced above, the punnet gathers all the different assets to migrate. 
+As introduced above, the punnet gathers all the different assets to migrate.
 
 ```
 ㄴ punnet
@@ -162,33 +161,33 @@ As introduced above, the punnet gathers all the different assets to migrate.
 	ㄴ folders
 ```
 
-When serialized in XML format, it will look roughly like : 
+When serialized in XML format, it will look roughly like :
 
 ```xml
-<?xml version='1.0' encoding='UTF-8'?>  
-<ns:punnet xmlns:ns="http://www.arondor.com/xml/document" punnetId="34c5434c-4234-4fa2-9f91-7882a899a994#1">  
-	<ns:documentset>  
-		<ns:document documentId="34c5434c-4234-4fa2-9f91-7882a899a994">  
-			<ns:contentset>  
-				<com.arondor.fast2p8.model.punnet.ContentContainer contentStorage="URL">  
-					<ns:url>C:/samples/file.pdf</ns:url>  
-				</com.arondor.fast2p8.model.punnet.ContentContainer>  
-			</ns:contentset>  
-			<ns:dataset>  
-				<ns:data name="name" type="String">  
-					<ns:value>sample</ns:value>  
-				</ns:data>  
-			</ns:dataset>  
+<?xml version='1.0' encoding='UTF-8'?>
+<ns:punnet xmlns:ns="http://www.arondor.com/xml/document" punnetId="34c5434c-4234-4fa2-9f91-7882a899a994#1">
+	<ns:documentset>
+		<ns:document documentId="34c5434c-4234-4fa2-9f91-7882a899a994">
+			<ns:contentset>
+				<com.arondor.fast2p8.model.punnet.ContentContainer contentStorage="URL">
+					<ns:url>C:/samples/file.pdf</ns:url>
+				</com.arondor.fast2p8.model.punnet.ContentContainer>
+			</ns:contentset>
+			<ns:dataset>
+				<ns:data name="name" type="String">
+					<ns:value>sample</ns:value>
+				</ns:data>
+			</ns:dataset>
 			<ns:folderset>
                 <ns:folder parent-path="/primary-folder/subfolder" name="sample">
                     <ns:dataset />
                 </ns:folder>
-            </ns:folderset>  
-			<ns:annotationset />  
-		</ns:document>  
-	</ns:documentset>  
-	<ns:dataset />  
-	<folderSet />  
+            </ns:folderset>
+			<ns:annotationset />
+		</ns:document>
+	</ns:documentset>
+	<ns:dataset />
+	<folderSet />
 </ns:punnet>
 ```
 
@@ -198,7 +197,7 @@ The punnet will iterate through the follwing lifecycle until the last step is re
 
 <!-- https://mermaid-js.github.io/mermaid/#/flowchart -->
 
-``` mermaid
+```mermaid
 graph TD
     A(Created) --> B(Queued);
     B --> C(Processing);
@@ -228,12 +227,13 @@ When multiple tasks are linked together it represents a processing chain or a wo
 ## Map <small>― workflow</small> { #map data-toc-label="Map" }
 
 // todo
+
 ## Campaign <small>― workflow instance</small> { #campaign data-toc-label="Campaign" }
 
 As we have just seen, a campaign is made up of several tasks. In other words, it represents an instance of a map.
 
 !!! warning
-    
+
     A campaign has a unique name
 
 Despite this uniqueness, each campaign can be ran multiple times. The statistical data of the new run will be added to the previous run(s).
@@ -246,7 +246,7 @@ A retry feature is also available after each campaign. This makes possible to fi
 
 ### Lifecycle
 
-``` mermaid
+```mermaid
 graph LR
   A(Undefined) --> B(Starting);
   B --> C(Started);
@@ -257,3 +257,8 @@ graph LR
 ```
 
 ### Operating
+
+### Architecture
+
+![Image title](/assets/img/architecture_dark.png#only-dark){ width="60%" }
+![Image title](/assets/img/architecture_light.png#only-light){ width="60%" }

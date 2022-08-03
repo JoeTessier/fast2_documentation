@@ -12,17 +12,18 @@ If they role can seem quite important, they are paradoxically as easy and straig
 
 The required files for the worker to run properly are the following:
 
-|Item|Purpose|
-|---|---|
-|:material-folder: config/*|Configuration files, broker endpoint etc|
-|:material-folder: worker-libs/*|All libraries and dependencies for tasks executions|
-|:fontawesome-brands-java: fast2-worker-package-X.Y.Z.jar|Worker main unit|
-|:material-microsoft-windows: startup-worker.bat|Binary file for Windows|
-|:fontawesome-brands-linux: startup-worker.sh|Binary file for Linux|
+| Item                                                     | Purpose                                             |
+| -------------------------------------------------------- | --------------------------------------------------- |
+| :material-folder: config/\*                              | Configuration files, broker endpoint etc            |
+| :material-folder: worker-libs/\*                         | All libraries and dependencies for tasks executions |
+| :fontawesome-brands-java: fast2-worker-package-X.Y.Z.jar | Worker main unit                                    |
+| :material-microsoft-windows: startup-worker.bat          | Binary file for Windows                             |
+| :fontawesome-brands-linux: startup-worker.sh             | Binary file for Linux                               |
 
 Depending on the amount of documents and the number of tasks you are dealing with, you may want to control max memory usage allowed (`Xmx`) for worker.
 
 The default setting is 1GB for this resource:
+
 ```ini title="./config/env.properties"
 ...
 # Worker Maximum memory allowed (Xmx)
@@ -30,6 +31,7 @@ WORKER_MAX_MEMORY=1G
 ```
 
 Keep in mind that this property is designed for workers started from the binary `start-worker.sh|.bat`. If you intend to target the embedded worker, go to `./config/application.properties` instead:
+
 ```ini
 ...
 # Broker embedded worker max memory
@@ -62,8 +64,8 @@ The workers manifest themselves to the broker, and not the other way around. Thi
 
 Just like any architectural decisions, such model comes with is drawbacks and benefits. If the benefits can sound quite obvious given past explanations, the downsides are worth mentioning. We will shortly discuss here aout the two the most current:
 
-* Resource sharing: the more workers you’ll start on the same machine, the less they’ll have individually available resources.
-* Connections and sessions: duplication of workers induces duplications of server calls, therefore opened sessions.
+- Resource sharing: the more workers you’ll start on the same machine, the less they’ll have individually available resources.
+- Connections and sessions: duplication of workers induces duplications of server calls, therefore opened sessions.
 
 #### Resource sharing
 
@@ -79,7 +81,6 @@ A second non-negligible aspect is the number of connections and sessions opened 
 
 <br />
 <br />
-
 
 ### And what about...
 
