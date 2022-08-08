@@ -57,6 +57,9 @@ theme:
   font: 
     text: Nunito
 
+plugins:
+  - tags:
+      tags_file: tags.md
 
 markdown_extensions:
   - meta

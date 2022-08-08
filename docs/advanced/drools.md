@@ -1,3 +1,10 @@
+---
+tags:
+  - Drools
+  - Java
+  - Excel
+---
+
 # Drools: the Java rules engine
 
 Based on Excel document, “drools” is a rule engine used to execute code scripts, Java code in our context. Users can define business and/or functional rules as data transformations, mapping, etc. One of the key benefits is its adaptation to any structure and any level of complexity as long as your code respects the punnet structure ([quick reminder here](../getting-started/overall-concepts#punnet) if need be 😉). It can easily be shared between your team members for complex project to have concerned people seamlessly involved. Another upside: no development skill is required to build your own rules. Fast2 supports such feature with the [ApplyDroolsTask]().
