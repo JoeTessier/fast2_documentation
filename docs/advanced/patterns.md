@@ -3,7 +3,7 @@ draft: false
 
 title: Patterns
 icon: las la-magic
-tags: ["configuration", "java"]
+tags: ["configuration", "Java"]
 ---
 
 A pattern is a sequence of instructions, a model, which can be easily recognized by an aware glance. It is strictly under this definition that Fast2 patterns stand.

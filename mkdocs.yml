@@ -58,8 +58,9 @@ theme:
     text: Nunito
 
 plugins:
-  - tags:
+  - tags: 
       tags_file: tags.md
+  - search
 
 markdown_extensions:
   - meta
