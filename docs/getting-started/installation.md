@@ -10,13 +10,21 @@ icon: las la-laptop-code
 
 The installation of Fast2 requires a few environment specifications to run properly :
 
-- JRE8, JRE11 : you can either get it from Oracle or [OpenJDK](https://developers.redhat.com/products/openjdk/download). If you have multiple JDK/JRE already installed, point out the correct one in the `config/env.properties` file of the Fast2 installation folder.
-- RAM : we highly recommend having 8GB or more, although 4GB might be enough for design stage.
-- Processor : 8 CPUs.
+| What      |                        | Description                                                                                                                                                                                                                                                                                                                                                                                             |
+| --------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| RAM       | 8GB+                   | We highly recommend having at least 8GB. <br /><br />When switching to production environments, 16GB or 32GB will be required since more documents will be handled at once, and heavy tasks (_e.g._ conversion, extraction) might get short on resources.                                                                                                                                               |
+| Processor | 8 CPUs                 | Processor capabilities need to be aligned with migration requirements, such as data mapping, content conversion and heavy I/O.                                                                                                                                                                                                                                                                          |
+| Storage   | 128GB+                 | Although the contents dealt by Fast2 will be temporarily stored (and deleted afterwards if asked), the server needs enough storage for the files/contents alongside the database tracking all the migration information.                                                                                                                                                                                |
+| Java      | JRE8, JRE11            | Any provider will fit (Oracle, [OpenJDK](https://developers.redhat.com/products/openjdk/download), etc). If you have multiple JDK/JRE already installed, specify the correct one in the `./config/env.properties` file.                                                                                                                                                                                 |
+| OS        | Windows&nbsp;7+, Linux | All versions of Windows 7+ are supported. <br/><br/>All common distros of Linux are supported (Ubunto, RedHat, CentOS, etc)<br /><br />Power architecture are supported as well (except the ones running in AIX), but only Java parts will work seamlessly whereas third-party software (_e.g._ imagemagick, libreoffice, etc) might not, as they have not all have been developed for such plateforms. |
+
+<br /><br />
 
 While setting up the production server for Fast2, make sure to scale the Fast2 machine accordingly. You may need to increase the allocated memory for both the broker and the background database. If you planned to deal with campaigns of a few millions of documents, setting **8GB** of memory for the [broker](/documentation/configuration/#configure-the-broker) and **8GB** for the [database](/documentation/elasticsearch/#memory) as well is a good starting point.
 
-Make sure to confirm the compatibility between Elasticsearch and your environment at [Elasticsearch Support Matrix](https://www.elastic.co/fr/support/matrix).
+!!! warning
+
+    If you decide to go for a custom Elasticsearch database, make sure to confirm the compatibility with your environment at [Elasticsearch Support Matrix](https://www.elastic.co/fr/support/matrix).
 
 ## Fast2 packages
 
@@ -201,7 +209,7 @@ To end the Fast2 process, just hit `Ctrl+C` in the command line the startup file
     $ service fast2-broker status
     ```
 
-    OR
+    or
 
     ```sh
     $ systemctl start fast2-broker.service
