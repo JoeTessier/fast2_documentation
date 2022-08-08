@@ -133,8 +133,8 @@ nav:
     # - Configuration: getting-started/configuration.md
   - Advanced:
     # - advanced/index.md
-    - ⚠ Drools: advanced/drools.md
-    - ⚠ Patterns: advanced/patterns.md
+    - Drools: advanced/drools.md
+    - Patterns: advanced/patterns.md
     - ⚠ Scheduler: advanced/scheduler.md
     - ⚠ Shared objects: advanced/shared-objects.md
     - ⚠ Optimization: advanced/optimization.md
