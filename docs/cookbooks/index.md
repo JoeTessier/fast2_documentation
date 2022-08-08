@@ -6,6 +6,6 @@
 
 Here are some examples of short use-cases with Fast2, covering APIs management which might be required for configuring some of the tasks.
 
-This section will particularly be insightful for custom module management.
+This section will particularly be insightful for custom module development.
 
 You will find here boilerplate code snippets, as well as real-life examples of task configuration for challenges you might take up, one day.
