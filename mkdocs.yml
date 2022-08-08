@@ -1,7 +1,7 @@
 # Project information
 site_name: Fast2 documentation
 site_url: https://joetessier.github.io/fast2_documentation/
-site_author: Martin Donath
+site_author: Joe TESSIER
 theme:
   name: material
   logo: assets/Fast2_favicon_white.png
