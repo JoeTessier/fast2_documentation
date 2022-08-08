@@ -18,9 +18,16 @@ theme:
     - search.suggest
     - search.highlight
     - search.share
+  
+  # 404 page
+  static_templates:
+    - 404.html
 
-  palette:
+  # Necessary for search to work properly
+  include_search_page: false
+  search_index_only: true
     
+  palette:
     # Palette toggle for automatic mode
     - media: "(prefers-color-scheme)"
       primary: deep orange
