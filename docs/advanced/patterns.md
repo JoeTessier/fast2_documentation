@@ -12,7 +12,7 @@ Our migration tool relies on a specific syntax used to dynamically retrieve info
 
 ## Patterns, what are they anyway ?
 
-In Fast2, several data can be retrieved and accessed dynamically from a dedicated syntax which Fast2 supports for your convenience. This syntax ,`${...}`, can be used in most of the configuration fields of the tasks composing your migration workflow.
+In Fast2, several data can be retrieved and accessed dynamically from a dedicated syntax which Fast2 supports for your convenience. This `${...}` syntax can be used in most of the configuration fields of the tasks composing your migration workflow.
 
 ![Example of pattern implementation](../../assets/img/advanced/pattern_example1.png){ width="60%" align=left loading=lazy }
 
