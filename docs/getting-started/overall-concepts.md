@@ -47,6 +47,11 @@
 <br />
 <br />
 
+## Architecture
+
+![Fast2 architecture](assets/img/architecture_dark.png#only-dark){ width="60%" }
+![Fast2 architecture](assets/img/architecture_light.png#only-light){ width="60%" }
+
 ## :fontawesome-solid-basket-shopping: Fast2 objects
 
 ### Folder
@@ -257,8 +262,3 @@ graph LR
 ```
 
 ### Operating
-
-### Architecture
-
-![Image title](/assets/img/architecture_dark.png#only-dark){ width="60%" }
-![Image title](/assets/img/architecture_light.png#only-light){ width="60%" }
