@@ -103,7 +103,7 @@ extra:
   
   analytics: 
     provider: google
-    property : G-XXXXX # G-16YBFECC4N
+    property : G-XXXXX
     feedback:
       title: Was this page helpful?
       ratings:
