@@ -13,3 +13,8 @@ jobs:
           python-version: 3.x
       - run: pip install mkdocs-material 
       - run: mkdocs gh-deploy --force
+  markdown-link-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: gaurav-nelson/github-action-markdown-link-check@v1
