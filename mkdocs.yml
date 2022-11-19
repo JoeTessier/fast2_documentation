@@ -21,6 +21,7 @@ theme:
     - search.suggest
     - search.highlight
     - search.share
+    - content.code.annotate
 
   
   # 404 page
@@ -174,6 +175,7 @@ nav:
     - JavaScript transform: cookbooks/javascript-transform .md
     - From ZIP to punnet: cookbooks/from-zip-to-punnet.md
     - "CSV source: a step further": cookbooks/csv-source.md
+    - Data from file name: cookbooks/data_from_filename.md
   # - ⚠ Release notes:
   #   - release-notes/index.md
   #   - v2.5.0: release-notes/2.5.0.md
