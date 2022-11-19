@@ -6,4 +6,6 @@ From the root of the project, head out here : https://squidfunk.github.io/mkdocs
 
 Windows CMD :
 
+```sh
 docker run --rm -it -p 8000:8000 -v "%cd%":/docs squidfunk/mkdocs-material
+```

@@ -11,8 +11,8 @@ theme:
     - navigation.instant
     # - navigation.tracking
     
-    # - navigation.tabs # main parts in top banner
-    - navigation.indexes # hides */index.md in left lateral nav
+    - navigation.tabs # main parts in top banner
+    - navigation.indexes # toggle */index.md in left lateral nav
 
     # - navigation.sections
     - navigation.expand
@@ -21,6 +21,7 @@ theme:
     - search.suggest
     - search.highlight
     - search.share
+
   
   # 404 page
   static_templates:
@@ -136,7 +137,7 @@ nav:
     # - getting-started/index.md
     - Overall concepts: getting-started/overall-concepts.md
     - Installation: getting-started/installation.md
-    - ⚠ Create a workflow: /
+    # - ⚠ Create a workflow: /
     # - Configuration: getting-started/configuration.md
   - Advanced:
     # - advanced/index.md
@@ -154,29 +155,29 @@ nav:
     - Dashboards: components/dashboards.md
   - ⚠ Catalog:
     - catalog/index.md
-    - Connectors:
-      - Sources: catalog/sources.md
-      - Content sources: catalog/content-sources.md
-      - ⚠ Injectors: /
-    - Intermediates: 
-      - ⚠ Transform: /
-      - ⚠ Convert: /
-    - ⚠ Credentials: /
-    - ⚠ Tools: /
+    # - Connectors:
+    #   - Sources: catalog/sources.md
+    #   - Conte nt sources: catalog/content-sources.md
+    #   - ⚠ Injectors: /
+    # - Intermediates: 
+    #   - ⚠ Transform: /
+    #   - ⚠ Convert: /
+    # - ⚠ Credentials: /
+    # - ⚠ Tools: /
     # ⚠ - Helpers: /
-  - ⚠ Cookbooks:
+  - Cookbooks:
     - cookbooks/index.md
-    - Punnets management: cookbooks/punnet.md
-    - Documents management: cookbooks/document.md
-    - Contents management: cookbooks/content.md
-    - Dataset management: cookbooks/dataset.md
+    - Punnets management: cookbooks/punnet_basics.md
+    - Documents management: cookbooks/document_basics.md
+    - Contents management: cookbooks/content_basics.md
+    - Dataset management: cookbooks/dataset_basics.md
     - JavaScript transform: cookbooks/javascript-transform .md
     - From ZIP to punnet: cookbooks/from-zip-to-punnet.md
     - "CSV source: a step further": cookbooks/csv-source.md
-  - ⚠ Release notes:
-    - release-notes/index.md
-    - v2.5.0: release-notes/2.5.0.md
-    - v2.4.7: release-notes/2.4.7.md
+  # - ⚠ Release notes:
+  #   - release-notes/index.md
+  #   - v2.5.0: release-notes/2.5.0.md
+  #   - v2.4.7: release-notes/2.4.7.md
   - ⚠ Blog:
     - blog/index.md
     - 2022:
