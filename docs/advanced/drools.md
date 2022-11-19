@@ -29,7 +29,7 @@ It’s composed with :
 
 : all java classes required, separated by a comma. These are the same packages that would be imported in a regular Java class in order to have the code running properly.
 
-- **Sequential** (optionnal)
+- **Sequential** (optional)
 
 : specify here the order in which rules should apply
 
