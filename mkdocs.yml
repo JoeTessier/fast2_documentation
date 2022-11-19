@@ -140,14 +140,6 @@ nav:
     - Installation: getting-started/installation.md
     # - ⚠ Create a workflow: /
     # - Configuration: getting-started/configuration.md
-  - Advanced:
-    # - advanced/index.md
-    - Drools: advanced/drools.md
-    - Patterns: advanced/patterns.md
-    - ⚠ Scheduler: advanced/scheduler.md
-    - ⚠ Shared objects: advanced/shared-objects.md
-    - ⚠ Optimization: advanced/optimization.md
-    - ⚠ Custom module: advanced/custom-module.md
   - Components:
     - components/index.md
     - Broker: components/broker.md
@@ -166,6 +158,14 @@ nav:
     # - ⚠ Credentials: /
     # - ⚠ Tools: /
     # ⚠ - Helpers: /
+  - Advanced:
+    # - advanced/index.md
+    - Drools: advanced/drools.md
+    - Patterns: advanced/patterns.md
+    - ⚠ Scheduler: advanced/scheduler.md
+    - ⚠ Shared objects: advanced/shared-objects.md
+    - ⚠ Optimization: advanced/optimization.md
+    - ⚠ Custom module: advanced/custom-module.md
   - Cookbooks:
     - cookbooks/index.md
     - Punnets management: cookbooks/punnet_basics.md

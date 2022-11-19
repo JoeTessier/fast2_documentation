@@ -9,3 +9,25 @@ Windows CMD :
 ```sh
 docker run --rm -it -p 8000:8000 -v "%cd%":/docs squidfunk/mkdocs-material
 ```
+
+# Left to do
+
+- getting started
+  - create a workflow (w GIF)
+  - UI controls and presentation
+  - UI configuration
+    - links
+    - tasks
+- Catalog (req. XSLS or remodel ?)
+- Blogs (req. sponsor status)
+- Cookbook
+  - JS transform
+  - ZIP2Punnet
+  - CSV source
+  - JDBC
+- components (index)
+- advanced
+  - scheduler
+  - shared objects
+  - optimization
+  - custom modules
