@@ -13,7 +13,7 @@ Times will happen when you will not be able to rely on side-file metadata docume
 
 Fortunatelly with Fast2, there is still a possibility to parse this file name and pull out the required metadata. Last step would be to tight them down into the document dataset.
 
-## 🧐 :face_with_raised_eyebrow: Where do we come from ?
+## :face_with_raised_eyebrow: Where do we come from ?
 
 For the educational aspect of this topic, let us consider a folder gathering several documents, all with the same format : `<document-type>-<data1>-<data2>`.
 
@@ -32,7 +32,7 @@ Our folder looks like this:
 	ㄴ draft-346-DEF.pdf
 ```
 
-## 🤔 :thinking: Where to go ?
+## :thinking: Where to go ?
 
 At a glance, we are just 3 (major) steps away from having a PDF content in our punnet, with a basic dataset populated from the JSON metadata :
 
@@ -43,7 +43,7 @@ At a glance, we are just 3 (major) steps away from having a PDF content in our p
 <br/>
 <br/>
 
-## 🚀 Way to go !
+## :rocket: Way to go !
 
 Inside Fast2, the map design is now pretty straightforward, given our ideas are rather clear in terms of the overall order of the operations.
 
@@ -65,7 +65,7 @@ That way, we end up with 4 tasks :
 </br>
 </br>
 
-### ⚗️ JavaScript elaboration
+### :test_tube: JavaScript elaboration
 
 Although the configuration of the first task can be easily guessed, the [JSTranform](/todo) final resulting script should look something like this :
 
@@ -97,7 +97,7 @@ punnet.getDocuments().forEach(function (doc) {
 
 Head out now to the Run screen, start your campaign and just... enjoy !
 
-### 🏁 Result
+### :checkered_flag: Result
 
 At the latest stage of your workflow, the document dataset is filled with the properties found in the JSON and integrated as metadata.
 
@@ -131,7 +131,7 @@ At the latest stage of your workflow, the document dataset is filled with the pr
 }
 ```
 
-## 👏 Let's sum up
+## :clap: Let's sum up
 
 We can bring this scenario further by mapping data from the parent folder(s). We would just need the document path, which can be retrieved easily, as explained in [the advanced section of how to handle the JS Tranform task](/todo).
 
