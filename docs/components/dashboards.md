@@ -72,7 +72,170 @@ However they can be accessed on a different port, which you will have to highlig
         server.port=8888
         ```
 
+### Remote access to the dashboards
+
+If this port needs to be exposed and accessible from a different machine, the dashboard configuration must be configured to allow connections from remote users:
+
+```yml title="./opensearch-dashboards-X.Y.Z/config/opensearch_dashboards.yml"
+server.host: "0.0.0.0"
+```
+
+### What is the database port is changed ?
+
+To make sure the dashboards still reach the database, make sure the port is still up-to-date in the dashboards config file :
+
+```yml title="./opensearch-dashboards-X.Y.Z/config/opensearch_dashboards.yml"
+opensearch.hosts: ["http://localhost:1790"]
+```
+
 ## Advanced use
+
+!!! Note
+
+    If the metadata you are looking for is not available and cannot be found in the dropdown options, refresh the <code>f2\_\*</code> index (which can be manually triggered from the list of saved objects).
+
+The dashboards add-on provided with Fast2 is the go-to tool for migration report, project advancement insights, and deeper data analysis.
+
+However data manipulations in this tool are not always intuitive nor straight forward, although they do open new dimensions regarding in-depth studies by the compound aggregation, data conversion and other operations now at the tips of your fingers.
+
+Several use-cases can be envisioned, we will only relate here the data conversion steps to go through given the widespread necessity of such a basic task.
+
+### Imports objects into the dashboards feature
+
+This section will guide you through the import process of resources (such as indices, visualization as `.ndjson` files and others).
+
+This resource can be imported into your dashboard add-on from the right-side menu > "Stack management" > "Saved objects" > "Import"
+
+as shown on the screen-capture below :
+
+![Dashboard : import resource](../assets/img/components/dashboards_import-menu.png){ width="60%" }
+
+### Resource #1 : Exception table
+
+!!! Info
+
+    This resource has been generated from OpenSearch dashboards but can be imported into either Kibana and OpenSearch dashboards.
+
+For a list of exceptions, since the error messages and steps in error are tracked in the database but not attached to the punnet itself, it is possible to rely on the dashboards add-on to generate a table of exceptions, accross multiple campaigns. With all the punnet details required for both investigations and error resolution, but for delta migrations afterwards, this table can be exported in CSV for externalisation of this asset.
+
+Here is an example of a table gathering :
+
+- **Campaign**: campaign where the exception is thrown
+- **PunnetId**: ID of the punnet
+- **documentId**: ID of the document (useful when the punnets store several documents)
+- **Document name**
+- **Step** where the exception occured
+- **Exception class**
+- **Exception message**
+- **Content** URL (if any)
+- **Count** of the number of documents in the punnet
+
+![Dashboard for exception table](../assets/img/components/dashboards_visualization-exception-table.png){ width="60%" }
+
+To get started with this visualisation, or to add it to your existing dashboard, click down below :
+
+[:material-file-download: Download this resource](/documents/dashboards_exception-data-table.ndjson){ .md-button }
+
+This resources can be imported as [explained previously](#imports-objects-into-the-dashboards-feature).
+<br/>
+<br/>
+<br/>
+
+### Resource #2 : Campaign success ratio
+
+!!! Info
+
+    This resource has been generated from OpenSearch dashboards but can be imported into either Kibana and OpenSearch dashboards.
+
+For a graph visualization of the success ratio per map/campaign, the following resource can be imported for a per-day granularity of the results, where exceptions are summed up (no task differenciation), for comparison with the successfully processed documents within this same campaign.
+
+![Dashboard for campaign success ratio](../assets/img/components/dashboards_visualization-campaign-ratio.png){ width="60%" }
+
+To get started with this visualisation, or to add it to your existing dashboard, click down below :
+
+[:material-file-download: Download this visualization](/documents/dashboards_Campaign-success-ratio-per-day.ndjson){ .md-button }
+
+This resources can be imported as [explained previously](#imports-objects-into-the-dashboards-feature).
+<br/>
+<br/>
+<br/>
+
+### Resource #3 : Processing speed per task
+
+!!! Info
+
+    This resource has been generated from OpenSearch dashboards but can be imported into either Kibana and OpenSearch dashboards.
+
+For a graph visualization of the success ratio per map/campaign, the following resource can be imported for a per-day granularity of the results, where exceptions are summed up (no task differenciation), for comparison with the successfully processed documents within this same campaign.
+
+![Dashboard for Processing speed per task](../assets/img/components/dashboards_graph_processing_speed.png){ width="60%" }
+
+To get started with this visualisation, or to add it to your existing dashboard, click down below :
+
+[:material-file-download: Download this visualization](/documents/dashboards_processing_speed_per_task.ndjson){ .md-button }
+
+This resources can be imported as [explained previously](#imports-objects-into-the-dashboards-feature).
+<br/>
+<br/>
+<br/>
+
+### Advanced filtering capabilities
+
+Since the visualisations can pull out vast amounts of data from the database, most of the results might need to be narrowed down using the filter function :
+
+![Dashboard : import menu](../assets/img/components/dashboards_query-filter.png){ width="60%" }
+
+Head out to the matching documentation (Kibana or OpenSearch dashboards) for basic rules and help on how to build such filter.
+
+We will here just focus on one main filter, which would help to only get the relevant data for either a ratio or datatable of success or failure along the migration.
+
+Our need is to only the the documents/punnets, whose status are `ProcessedException` (to gather all failed documents, no matter the task where the exception got thrown) or the documents/punnets being both `ProcessedOK` from the injection task (which will be called here: <b>Last task</b>).
+
+In short, we only want to select :
+
+- the OK's of the injector, which induces the success of the migration for this document
+- the KO's of all the tasks
+
+Code-wise, since our expression would looks like this :
+
+```js
+status == KO || (status == OK && step == "Last task");
+```
+
+Since
+
+- `||` is _should_
+- `&&` is _must_
+
+the final syntax is (for DSL -- <i>Dashboards Query Language</i> -- or KQL -- </i>Kibana query language</i>) :
+
+```json
+{
+  "query": {
+    "bool": {
+      "should": [
+        {
+          "term": { "status.keyword": "ProcessedException" }
+        },
+        {
+          "bool": {
+            "must": [
+              { "term": { "status.keyword": "ProcessedOK" } },
+              { "term": { "stepName.keyword": "Last task" } }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+This code is to be used in the filter function, as advanced filter (instead of the default fields-prepared option).
+
+![Dashboard : import menu](../assets/img/components/dashboards_query-json.png){ width="60%" }
+
+<br />
 
 The dashboards add-on provided with Fast2 is the go-to tool for migration report, project advancement insights, and deeper data analysis.
 
@@ -86,7 +249,7 @@ Let’s consider a metadata processed by Fast2 as a String instead of a float. O
 
 We will base our example on the following punnet structure:
 
-```xml title="punnet.xml"
+```xml title="punnet.xml" hl_lines="14-16"
 <?xml version='1.0' encoding='UTF-8'?>
 <ns:punnet xmlns:ns="http://www.arondor.com/xml/document" punnetId="FileNetSource#page_0#pageIndex_0">
 	<ns:documentset>

@@ -11,7 +11,7 @@ theme:
     - navigation.instant
     # - navigation.tracking
     
-    - navigation.tabs # main parts in top banner
+    # - navigation.tabs # main parts in top banner
     - navigation.indexes # toggle */index.md in left lateral nav
 
     # - navigation.sections

@@ -103,7 +103,7 @@ The configuration required are the following:
 |                     `-Xmx8g` | Here, you specify the maximum memory which can be used, if available, by the database.                                                                                                                                                                                                                                            |
 | `−XX:MaxDirectMemorySize=4g` | A Java process/service doesn't use only the amount of memory defined for the JVM Heap but it will make use native (off-heap) memory. <br/>For a JVM Max Heap size of 4GB, in recent versions of Elasticsearch is going to limit the `XX:MaxDirectMemorySize` to 50% of the JVM Max Heap size (2GB in our case) for direct memory. |
 
-For further comprehension of these parameters, check out the [Elasticsearch official documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/important-settings.html#heap-size-settings) on the topic.
+For further comprehension of these parameters, check out the [Elasticsearch official documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/important-settings.html#heap-size-settings) on the topic or [OpenSearch official documenation](https://opensearch.org/docs/1.1/opensearch/install/important-settings/).
 Upgrading the metrics will prevent `java.lang.OutOfMemoryError` to pop up during heavy migration executions.
 
 <br />
@@ -118,6 +118,50 @@ Two different plugins exist, depending on your web navigator:
 * [ElasticSearch Head](https://chrome.google.com/webstore/detail/elasticsearch-head/ffmkiejjmecolpfloofpjologoblkegm) only for Google Chrome.
 
 -->
+
+# Remote access to the database
+
+The next operations need to happen when the database is shut down. To make sure of that, the `jcmd` command might be of great help.
+
+!!! Warning
+
+        The database port needs to be opened from the Fast2 server, and accessible by your remote machine.
+
+1.  To check the database port is accessible from your machine, run the following command (from your work station):
+
+    ```sh
+    curl <fast2.server>:<database-port>
+    ```
+
+2.  Head out to the database configuration YAML file `opensearch.yml` and add the following lines:
+
+    ```yml
+    network.host: 0.0.0.0
+    node.name: node-1
+    cluster.initial_master_nodes: node-1
+    ```
+
+3.  If Fast2 is installed on a Linux server, you may also need to increase the memory usage for your cluster (on the server where the database is running), as stipulated in the [Official OpenSearch documentation](https://opensearch.org/docs/1.0/opensearch/install/important-settings/).
+
+    ```ini title="/etc/sysctl.conf"
+    # for remote access to Fast2 embedded database
+    vm.max_map_count=262144
+    ```
+
+4.  Save the file, and run the following command to _refresh_ your server configuration :
+
+    ```sh
+    sudo sysctl -p
+    ```
+
+5.  Restart the broker (which will induce the bootup of the database), and go check from your machine the access to the Fast2 database.
+
+    The webpage (at the same URL we `curl`-ed in the 1st step) should display something like so :
+
+    ![Webpage of remote access to the database](../assets/img/components/db_remote_access_webpage.png){ width="60%" }
+
+<br/>
+
 <br />
 
 ## Troubleshooting
