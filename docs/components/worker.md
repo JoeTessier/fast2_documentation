@@ -10,6 +10,8 @@ No migration project could be overcome if it was not by them!
 
 If they role can seem quite important, they are paradoxically as easy and straight forward to get up and running. Just the right files to gather, as mentioned here, and a new worker just enrolled!
 
+One of the major aspects of a promising migration project is what all project managers will ask you to vouch for: performance metrics. Let’s suppose you need to migrate documents from a source system into a second one, the latter having a much higher input flow tolerance. No need for empirical statistics to know that the old ECM will be the bottleneck. An architecture similar to a hybrid deployment variant (topic we presented [here](../../getting-started/installation/#root-folder-anatomy)) could easily be envisioned. But let’s complicate things a little bit here: in-between the extraction and the injection phase, the metadata have to be updated, with new date formatting and heavy mapping of document related properties. Can still a hybrid-like architecture save you now ?
+
 ## :material-hard-hat: Configure the worker(s)
 
 The required files for the worker to run properly are the following:
@@ -50,7 +52,7 @@ The queues names will also be declared in the tasks configuration panel, so the 
 
 In order to have specific worker tied to particular queues, the configuration needs to be updated here:
 
-```ini title="./config/application.properties"
+```ini title="./config/application.properties" hl_lines="2"
 # Worker queue regex filter
 # worker.queue.regex=.*
 ```
@@ -60,14 +62,84 @@ In order to have specific worker tied to particular queues, the configuration ne
 One of the major aspects of a promising migration project is what all project managers will ask you to vouch for: performance metrics.
 Let’s suppose you need to migrate documents from a source system into a second one, the latter having a much higher input flow tolerance. No need for empirical statistics to know that the old ECM will be the bottleneck. An architecture similar to a hybrid deployment variant (topic we presented [here](#)) could easily be envisioned. But let’s complicate things a little bit here: in-between the extraction and the injection phase, the metadata have to be updated, with new date formatting and heavy mapping of document related properties. Can still a hybrid-like architecture save you now ?
 
+### Several workers
+
+### Context
+
+One of the major aspects of a promising migration project is what all project managers will ask you to vouch for: performance metrics.
+Let’s suppose you need to migrate documents from a source system into a second one, the latter having a much higher input flow tolerance. No need for empirical statistics to know that the old ECM will be the bottleneck. An architecture similar to a hybrid deployment variant (topic we presented [here](../../../blog/deployment-variants/)) could easily be envisioned.
+But let’s complicate things a little bit here: in-between the extraction and the injection phase, the metadata have to be updated, with new date formatting and heavy mapping of document related properties. Can still a hybrid-like architecture save you now ?
+
 ### How to set up
 
-When instantiating several workers, make sure all required files (listed earlier) are present on each machine where a worker will be booted up.
+Checkout in the official documentation the required Fast2 files and folders to set up a new worker. Leave a copy of the required files and folder on the machine hosting the source environment. This worker -- let’s label it as worker-S for “source” -- will be assigned to the extraction part.
+As indicated in the installation section, starting Fast2 will launch an embedded worker, assigned by default to all tasks composing the migration workflow. This worker here will be our worker-D (for “Destination”, or “Default”).
 
-The workers manifest themselves to the broker, and not the other way around. This is why the broker endpoint needs to be configured accordingly, from the `./config/application.properties` file of the worker.
+Plug the worker-S onto the Fast2 broker (yes, the workers -- as [illustrated here](../../presentation/#architecture) -- manifest themselves to the broker, and not the other way around) : to do so, open the `config/application.properties` of the worker-S :
 
-<br />
-<br />
+=== "v2.4-"
+
+    ```ini title="./config/application.properties"  hl_lines="4"
+    # Fast2 2.1.0 configuration
+
+    # Remote broker host to use by the worker
+    broker.host=localhost
+
+    # Remote broker port to use by the worker
+    # broker.port=1789
+    ...
+    ```
+
+=== "v2.5+"
+
+    ```ini title="./config/application.properties"  hl_lines="4"
+    # Fast2 2.8.0 configuration
+
+    # Remote broker url to use by the worker
+    broker.url=http://localhost:1789/broker
+
+    # Port exposed by Broker
+    server.port=1789
+    # Context path used by Broker
+    server.servlet.context-path=/
+
+    ...
+    ```
+
+Update the name (or IP address) of the machine where Fast2 is running (`broker.host`), and the name of the queue which the worker will be assigned to (ex/ “extraction”).
+
+1. Start now the Fast2 server ([documentation here](../../getting-started/installation/#start-fast2-broker)) to have it up and running alongside the worker-D. This latter will be assigned to both the _mapping_ of the metadata and the injection of the documents in the destination environment.
+2. The start the worker-S ([documentation here](../../getting-started/installation/##start-fast2-worker)).
+
+![Schema of the architecture for a 2-worker migration](../assets/img/components/workers.png){ width="60%" }
+
+Open your browser to reach the Fast2 UI, and the build up your migration workflow. For the sake of this example, 3 tasks only will suit our needs of extraction, metadata transformation and load.
+
+> 3 tasks, 3 queues, 2 workers: lock and load !!
+
+The extraction task will be linked to the same queue we mentioned in the `config/application.properties` of the lone worker (ex/ source-queue).
+
+No need to set a queue for the last task, as it will be handled by default by the last worker started with the Fast2 server.
+
+![Task config with queue for worker S](../assets/img/components/workers-task-queue-src.png)
+
+For this worker, the `config/application.properties` will have the queue details set as follows:
+
+```ini
+...
+# Worker queue regex filter
+worker.queue.regex=source-queue
+```
+
+![Task config with queue for worker D](../assets/img/components/workers-task-queue-other.png)
+
+For this worker, the `config/application.properties` will have the queue details set as follows:
+
+```ini
+...
+# Worker queue regex filter
+worker.queue.regex=metadata-queue,default
+```
 
 ### Limits
 
